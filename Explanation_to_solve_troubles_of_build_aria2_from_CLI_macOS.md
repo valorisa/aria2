@@ -1,46 +1,47 @@
 <!-- markdownlint-disable MD029 -->
-# Guide de compilation d'aria2 sous macOS depuis les sources
 
-Ce guide détaille la procédure pour compiler aria2 depuis les sources sur macOS (Apple Silicon et Intel), en mettant l'accent sur la résolution du problème spécifique lié à GNU make.
+# Guide to Building aria2 from Source on macOS
 
-## Environnement requis
+This guide details the procedure for compiling aria2 from source on macOS (Apple Silicon and Intel), focusing on resolving the specific issue related to GNU make.
 
-- macOS (testé sur macOS 14.4.0 Darwin Kernel Version 24.4.0)
-- Architecture : Apple Silicon (M1/M2/M3) ou Intel
+## Required Environment
+
+- macOS (tested on macOS 14.4.0 Darwin Kernel Version 24.4.0)
+- Architecture: Apple Silicon (M1/M2/M3) or Intel
 - Xcode Command Line Tools
 - Homebrew
 
-## Installation des dépendances
+## Installing Dependencies
 
 ```bash
 brew update
 brew install automake autoconf libtool pkg-config openssl libxml2 sqlite c-ares libssh2 zlib gettext
 ```
 
-## Erreur courante et solution
+## Common Error and Solution
 
-### Problème rencontré
+### Problem Encountered
 
-Lors de la compilation avec `make`, l'erreur suivante apparaît :
+When compiling with `make`, the following error appears:
 
 ```bash
 Making all in po
 make[2]: *** No rule to make target '/config.status', needed by 'Makefile'.  Stop.
 ```
 
-### Cause
+### Root Cause
 
-Cette erreur est due à l'utilisation de la version BSD de make (fournie par défaut sur macOS) au lieu de GNU make. Le système de traduction gettext nécessite des fonctionnalités spécifiques à GNU make.
+This error occurs due to using the BSD version of make (default on macOS) instead of GNU make. The gettext translation system requires specific GNU make features.
 
-### Solution détaillée
+### Detailed Solution
 
-1) Nettoyage initial :
+1) Initial Cleanup:
 
 ```bash
 rm -f config.status po/Makefile po/Makefile.in aclocal.m4 configure
 ```
 
-2) Régénération de la configuration :
+2) Regenerating Configuration:
 
 ```bash
 gettextize --force --no-changelog
@@ -48,7 +49,7 @@ aclocal -I m4
 autoconf
 ```
 
-3) Configuration du projet :
+3) Project Configuration:
 
 ```bash
 ./configure --with-openssl \
@@ -67,55 +68,55 @@ autoconf
 /opt/homebrew/opt/zlib/lib/pkgconfig"
 ```
 
-4) Compilation avec GNU make :
+4) Compilation with GNU make:
 
 ```bash
 gmake
 ```
 
-5) Installation :
+5) Installation:
 
 ```bash
 sudo gmake install
 ```
 
-## Notes importantes
+## Important Notes
 
-### Chemins spécifiques à l'architecture
+### Architecture-Specific Paths
 
-- Pour Apple Silicon (ARM64) : utiliser `/opt/homebrew/...`
-- Pour Intel (x86_64) : utiliser `/usr/local/...`
+- For Apple Silicon (ARM64): use `/opt/homebrew/...`
+- For Intel (x86_64): use `/usr/local/...`
 
-### Vérification de l'installation
+### Installation Verification
 
-Après l'installation, vérifiez avec :
+After installation, verify with:
 
 ```bash
 aria2c --version
 ```
 
-### Fonctionnalités activées
+### Enabled Features
 
-La compilation inclut le support pour :
+The compilation includes support for:
 
 - BitTorrent
 - HTTPS (via AppleTLS)
 - Metalink
 - XML-RPC
 - WebSocket
-- Support SFTP (via libssh2)
+- SFTP Support (via libssh2)
 
-## Dépannage
+## Troubleshooting
 
-Si vous rencontrez des erreurs :
+If you encounter errors:
 
-1) Assurez-vous d'utiliser `gmake` et non `make`
-2) Vérifiez que toutes les dépendances sont bien installées
-3) En cas d'erreur de configuration, reprenez depuis l'étape de nettoyage
-4) Pour les utilisateurs de Mac Intel, adaptez les chemins en remplaçant `/opt/homebrew/` par `/usr/local/`
+1) Make sure to use `gmake` instead of `make`
+2) Verify that all dependencies are properly installed
+3) In case of configuration errors, start over from the cleanup step
+4) For Intel Mac users, adjust paths by replacing `/opt/homebrew/` with `/usr/local/`
 
-## Références
+## References
 
-- [Documentation officielle d'aria2](https://aria2.github.io/)
-- [Guide GNU make](https://www.gnu.org/software/make/manual/make.html)
-- [Documentation Homebrew](https://docs.brew.sh/)
+- [Official aria2 Documentation](https://aria2.github.io/)
+- [GNU make Guide](https://www.gnu.org/software/make/manual/make.html)
+- [Homebrew Documentation](https://docs.brew.sh/)
