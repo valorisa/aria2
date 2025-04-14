@@ -11,6 +11,14 @@ This guide details the procedure for compiling aria2 from source on macOS (Apple
 - Xcode Command Line Tools
 - Homebrew
 
+## Getting the Source Code
+
+First, clone the aria2 repository:
+```bash
+git clone https://github.com/aria2/aria2.git
+cd aria2
+```
+
 ## Installing Dependencies
 
 ```bash

@@ -11,6 +11,15 @@ Ce guide détaille la procédure pour compiler aria2 depuis les sources sur macO
 - Xcode Command Line Tools
 - Homebrew
 
+## Récupération du code source
+
+D'abord, clonez le dépôt aria2 :
+
+```bash
+git clone https://github.com/aria2/aria2.git
+cd aria2
+```
+
 ## Installation des dépendances
 
 ```bash
@@ -21,23 +30,28 @@ brew install automake autoconf libtool pkg-config openssl libxml2 sqlite c-ares 
 ## Erreur courante et solution
 
 ### Problème rencontré
+
 Lors de la compilation avec `make`, l'erreur suivante apparaît :
-```
+
+```bash
 Making all in po
 make[2]: *** No rule to make target '/config.status', needed by 'Makefile'.  Stop.
 ```
 
 ### Cause
+
 Cette erreur est due à l'utilisation de la version BSD de make (fournie par défaut sur macOS) au lieu de GNU make. Le système de traduction gettext nécessite des fonctionnalités spécifiques à GNU make.
 
 ### Solution détaillée
 
 1) Nettoyage initial :
+
 ```bash
 rm -f config.status po/Makefile po/Makefile.in aclocal.m4 configure
 ```
 
 2) Régénération de la configuration :
+
 ```bash
 gettextize --force --no-changelog
 aclocal -I m4
@@ -45,6 +59,7 @@ autoconf
 ```
 
 3) Configuration du projet :
+
 ```bash
 ./configure --with-openssl \
            --with-libxml2 \
@@ -63,11 +78,13 @@ autoconf
 ```
 
 4) Compilation avec GNU make :
+
 ```bash
 gmake
 ```
 
 5) Installation :
+
 ```bash
 sudo gmake install
 ```
@@ -75,17 +92,22 @@ sudo gmake install
 ## Notes importantes
 
 ### Chemins spécifiques à l'architecture
+
 - Pour Apple Silicon (ARM64) : utiliser `/opt/homebrew/...`
 - Pour Intel (x86_64) : utiliser `/usr/local/...`
 
 ### Vérification de l'installation
+
 Après l'installation, vérifiez avec :
+
 ```bash
 aria2c --version
 ```
 
 ### Fonctionnalités activées
+
 La compilation inclut le support pour :
+
 - BitTorrent
 - HTTPS (via AppleTLS)
 - Metalink
@@ -96,6 +118,7 @@ La compilation inclut le support pour :
 ## Dépannage
 
 Si vous rencontrez des erreurs :
+
 1) Assurez-vous d'utiliser `gmake` et non `make`
 2) Vérifiez que toutes les dépendances sont bien installées
 3) En cas d'erreur de configuration, reprenez depuis l'étape de nettoyage
