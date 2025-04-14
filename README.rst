@@ -564,10 +564,6 @@ References
 * `BitTorrent: Message Stream Encryption <http://wiki.vuze.com/w/Message_Stream_Encryption>`_
 * `Kademlia: A Peer-to-peer Information System Based on the  XOR Metric <https://pdos.csail.mit.edu/~petar/papers/maymounkov-kademlia-lncs.pdf>`_
 
-# aria2
-
-Pour la documentation complète du projet, veuillez consulter le fichier [README.rst](README.rst).
-
 ## Guides de compilation
 
 - [Guide in English](Explanation_to_solve_troubles_of_build_aria2_from_CLI_macOS.md)
