@@ -1,5 +1,4 @@
 <!-- markdownlint-disable MD029 -->
-
 # Guide to Building aria2 from Source on macOS
 
 This guide details the procedure for compiling aria2 from source on macOS (Apple Silicon and Intel), focusing on resolving the specific issue related to GNU make.
