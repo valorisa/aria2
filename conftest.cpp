@@ -158,28 +158,35 @@
 #define HAVE_SOME_FALLOCATE 1
 #define HAVE_ASCTIME_R 1
 #define HAVE_LOCALTIME_R 1
-#define HAVE_BASENAME 1
-#define HAVE_GAI_STRERROR 1
-#define HAVE_GETADDRINFO 1
-#define HAVE_GETTIMEOFDAY 1
-#define HAVE_STRPTIME 1
-#define HAVE_DAEMON 1
-#define HAVE_POLL 1
-#define HAVE_TIMEGM 1
-#define HAVE_KQUEUE 1
 /* end confdefs.h.  */
+/* Define basename to an innocuous variant, in case <limits.h> declares basename.
+   For example, HP-UX 11i <limits.h> declares gettimeofday.  */
+#define basename innocuous_basename
 
-#include <sys/types.h>
-#include <sys/event.h>
-#include <sys/time.h>
+/* System header to define __stub macros and hopefully few prototypes,
+   which can conflict with char basename (void); below.  */
+
+#include <limits.h>
+#undef basename
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char basename (void);
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined __stub_basename || defined __stub___basename
+choke me
+#endif
 
 int
 main (void)
 {
-
-struct kevent event;
-event.udata = reinterpret_cast<intptr_t>(&event);
-
+return basename ();
   ;
   return 0;
 }
