@@ -128,4 +128,3 @@ If you encounter errors:
 - [Official aria2 Documentation](https://aria2.github.io/)
 - [GNU make Guide](https://www.gnu.org/software/make/manual/make.html)
 - [Homebrew Documentation](https://docs.brew.sh/)
-
